@@ -183,6 +183,7 @@ GLfloat gSquareData[SQUARE_DATA_LEN] = {
   glEnableVertexAttribArray(GLKVertexAttribColor);
   glVertexAttribPointer(GLKVertexAttribColor, 3, GL_FLOAT, GL_FALSE, 36, BUFFER_OFFSET(24));
   //                                         次元数                   次元数 x sizeof(GLfloat) x 要素数
+  glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
   
   glBindVertexArrayOES(0);
 }
