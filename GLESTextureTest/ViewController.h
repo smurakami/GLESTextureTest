@@ -10,5 +10,7 @@
 #import <GLKit/GLKit.h>
 
 @interface ViewController : GLKViewController
-
+{
+  GLKTextureInfo *_texInfo;
+}
 @end
