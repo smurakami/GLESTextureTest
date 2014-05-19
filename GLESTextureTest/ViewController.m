@@ -27,51 +27,51 @@ enum
   NUM_ATTRIBUTES
 };
 
-GLfloat gCubeVertexData[216] =
+GLfloat gCubeVertexData[216 + 108] =
 {
   // Data layout for each line below is:
   // positionX, positionY, positionZ,     normalX, normalY, normalZ,
-  0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,
-  0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,
-  0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-  0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-  0.5f, 0.5f, -0.5f,          1.0f, 0.0f, 0.0f,
-  0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
+  0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, 0.5f, -0.5f,          1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
   
-  0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,
-  -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-  0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-  0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-  -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-  -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,
+  0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,     0.0, 1.0, 1.0,
   
-  -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,
-  -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-  -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-  -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-  -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-  -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,
+  -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
   
-  -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,
-  0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-  -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-  -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-  0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-  0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,
+  -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,     0.0, 1.0, 1.0,
   
-  0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,
-  -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-  0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-  0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-  -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-  -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,
+  0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,     0.0, 1.0, 1.0,
   
-  0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,
-  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-  -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f
+  0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,     0.0, 1.0, 1.0,
+  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,     0.0, 1.0, 1.0,
+  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,     0.0, 1.0, 1.0,
+  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,     0.0, 1.0, 1.0,
+  -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f,     0.0, 1.0, 1.0,
 };
 
 @interface ViewController () {
@@ -158,9 +158,12 @@ GLfloat gCubeVertexData[216] =
   glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
   
   glEnableVertexAttribArray(GLKVertexAttribPosition);
-  glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(0));
+  glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 36, BUFFER_OFFSET(0));
   glEnableVertexAttribArray(GLKVertexAttribNormal);
-  glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 24, BUFFER_OFFSET(12));
+  glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE, 36, BUFFER_OFFSET(12));
+  glEnableVertexAttribArray(GLKVertexAttribColor);
+  glVertexAttribPointer(GLKVertexAttribColor, 3, GL_FLOAT, GL_FALSE, 36, BUFFER_OFFSET(24));
+  //                                         次元数                   次元数 x sizeof(GLfloat) x 要素数
   
   glBindVertexArrayOES(0);
 }
