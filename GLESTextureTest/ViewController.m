@@ -74,6 +74,16 @@ GLfloat gCubeVertexData[216 + 108] =
   -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f,     0.0, 1.0, 1.0,
 };
 
+#define SQUARE_DATA_LEN (3 * 3 * 4)
+GLfloat gSquareData[SQUARE_DATA_LEN] = {
+  // Data layout for each line below is:
+  // positionX, positionY, positionZ,     normalX, normalY, normalZ,
+  0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f,  0.5f, -0.5f,        1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f, -0.5f,  0.5f,        1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+  0.5f,  0.5f,  0.5f,        1.0f, 0.0f, 0.0f,     0.0, 1.0, 1.0,
+};
+
 @interface ViewController () {
   GLuint _program;
   
@@ -112,7 +122,7 @@ GLfloat gCubeVertexData[216 + 108] =
   GLKView *view = (GLKView *)self.view;
   view.context = self.context;
   view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-  [self setupBoxColor];
+  [self setupSquareColor];
   
   [self setupTexture];
   [self setupGL];
@@ -155,13 +165,16 @@ GLfloat gCubeVertexData[216 + 108] =
   self.effect.colorMaterialEnabled = GL_TRUE;
   
   glEnable(GL_DEPTH_TEST);
+	//** アルファブレンド
+	glEnable( GL_BLEND );
+	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   
   glGenVertexArraysOES(1, &_vertexArray);
   glBindVertexArrayOES(_vertexArray);
   
   glGenBuffers(1, &_vertexBuffer);
   glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(gSquareData), gSquareData, GL_STATIC_DRAW);
   
   glEnableVertexAttribArray(GLKVertexAttribPosition);
   glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, 36, BUFFER_OFFSET(0));
@@ -180,6 +193,16 @@ GLfloat gCubeVertexData[216 + 108] =
   for (int i = 0; i < 6 * 6; i++){
     for (int k = 0; k < 3; k++){
       gCubeVertexData[i * 3 * 3 + 3 * 2 + k] = color[k];
+    }
+  }
+}
+
+- (void)setupSquareColor
+{
+  GLfloat color[3] = {1.0, 1.0, 1.0};
+  for (int i = 0; i < SQUARE_DATA_LEN / 9; i++){
+    for (int k = 0; k < 3; k++){
+      gSquareData[i * 3 * 3 + 3 * 2 + k] = color[k];
     }
   }
 }
@@ -223,7 +246,6 @@ static int exponent( int num )
   CGContextRef pImageContext = CGBitmapContextCreate( pImageData, _texSize.width, _texSize.height, 8, _texSize.width * 4, pColor, kCGImageAlphaPremultipliedLast );
   
   
-  
   // 左下からになってしまうため
   CGContextTranslateCTM( pImageContext, 0.0, _texSize.height - _imageSize.height );
   
@@ -237,25 +259,36 @@ static int exponent( int num )
   CGContextRelease( pImageContext );
   CGColorSpaceRelease( pColor );
   
-  /** テクスチャ領域を生成し、 mTexture 変数に識別番号を入れる。 **/
-  glGenTextures( 1, &_texture );
-  /** これから使用するテクスチャをセットする。 **/
-  glBindTexture( GL_TEXTURE_2D, _texture );
-  
-  // 自動的にミップマップ画像を作成してくれる
-  glTexParameteri( GL_TEXTURE_2D, GL_GENERATE_MIPMAP_HINT, GL_TRUE );
-  // テクスチャを拡大縮小するときの保管方法
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER , GL_LINEAR );
-  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-  
-  // テクスチャの繰り返し方法
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-  
-  // 画像をテクスチャに貼り付け。
-  // テクスチャは2のべき乗。
-  glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, _texSize.width, _texSize.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pImageData );
-  
+	// テクスチャ領域を生成し、 mTexture 変数に識別番号を入れる。
+    glGenTextures( 1, &_texture );
+    
+    // これから使用するテクスチャをセットする。
+    glBindTexture( GL_TEXTURE_2D, _texture );
+    
+	
+    // 自動的にミップマップ画像を作成してくれる
+    glTexParameteri( GL_TEXTURE_2D, GL_GENERATE_MIPMAP_HINT, GL_TRUE );
+    // テクスチャを拡大縮小するときの保管方法
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    // テクスチャの繰り返し方法
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    
+	
+	// テクスチャとポリゴンの合成方法
+	// 初期は GL_MODULATE
+	//glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );		// テクスチャ色で置き換える
+	//glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );			// アルファ値が1以下の所がポリゴン色と混ざる
+	//glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );		// ポリゴン色との掛け算
+	 
+    
+    // 画像をテクスチャに貼り付けます。
+    // テクスチャは2のべき乗。
+    glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, _texSize.width, _texSize.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pImageData );
+	/* テクスチャの割り当て */
+    
+    free( pImageData );
   
 }
 
@@ -344,8 +377,7 @@ static int exponent( int num )
   glTexCoordPointer( 2, GL_FLOAT, 0, texCoords );
   glEnableClientState( GL_TEXTURE_COORD_ARRAY );
   
-  
-  glDrawArrays(GL_TRIANGLES, 0, 36);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 @end
