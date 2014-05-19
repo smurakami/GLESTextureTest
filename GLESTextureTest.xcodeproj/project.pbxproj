@@ -25,6 +25,7 @@
 		6C2F68931929B16000531125 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C2F686D1929B15F00531125 /* UIKit.framework */; };
 		6C2F689B1929B16000531125 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F68991929B16000531125 /* InfoPlist.strings */; };
 		6C2F689D1929B16000531125 /* GLESTextureTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F689C1929B16000531125 /* GLESTextureTestTests.m */; };
+		6C2F68A81929BC1600531125 /* moyashi.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F68A71929BC1600531125 /* moyashi.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		6C2F68981929B16000531125 /* GLESTextureTestTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GLESTextureTestTests-Info.plist"; sourceTree = "<group>"; };
 		6C2F689A1929B16000531125 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6C2F689C1929B16000531125 /* GLESTextureTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLESTextureTestTests.m; sourceTree = "<group>"; };
+		6C2F68A71929BC1600531125 /* moyashi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moyashi.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 		6C2F68731929B15F00531125 /* GLESTextureTest */ = {
 			isa = PBXGroup;
 			children = (
+				6C2F68A61929BBFE00531125 /* Images */,
 				6C2F687C1929B15F00531125 /* AppDelegate.h */,
 				6C2F687D1929B15F00531125 /* AppDelegate.m */,
 				6C2F687F1929B15F00531125 /* Main.storyboard */,
@@ -164,6 +167,14 @@
 				6C2F68991929B16000531125 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6C2F68A61929BBFE00531125 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				6C2F68A71929BC1600531125 /* moyashi.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,6 +257,7 @@
 				6C2F688A1929B15F00531125 /* Images.xcassets in Resources */,
 				6C2F68831929B15F00531125 /* Shader.fsh in Resources */,
 				6C2F68781929B15F00531125 /* InfoPlist.strings in Resources */,
+				6C2F68A81929BC1600531125 /* moyashi.png in Resources */,
 				6C2F68811929B15F00531125 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
