@@ -112,6 +112,7 @@ GLfloat gCubeVertexData[216 + 108] =
   GLKView *view = (GLKView *)self.view;
   view.context = self.context;
   view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+  [self setupBoxColor];
   
   [self setupTexture];
   [self setupGL];
@@ -171,6 +172,16 @@ GLfloat gCubeVertexData[216 + 108] =
   //                                         次元数                   次元数 x sizeof(GLfloat) x 要素数
   
   glBindVertexArrayOES(0);
+}
+
+- (void)setupBoxColor
+{
+  GLfloat color[3] = {1.0, 1.0, 1.0};
+  for (int i = 0; i < 6 * 6; i++){
+    for (int k = 0; k < 3; k++){
+      gCubeVertexData[i * 3 * 3 + 3 * 2 + k] = color[k];
+    }
+  }
 }
 
 static BOOL isExponent(int x)
