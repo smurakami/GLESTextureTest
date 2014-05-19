@@ -83,6 +83,10 @@ GLfloat gCubeVertexData[216 + 108] =
   
   GLuint _vertexArray;
   GLuint _vertexBuffer;
+  GLuint _texsture;
+  
+  CGSize _texSize;
+  CGSize _imageSize;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -109,6 +113,7 @@ GLfloat gCubeVertexData[216 + 108] =
   view.context = self.context;
   view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
   
+  [self setupTexture];
   [self setupGL];
 }
 
@@ -166,6 +171,75 @@ GLfloat gCubeVertexData[216 + 108] =
   //                                         次元数                   次元数 x sizeof(GLfloat) x 要素数
   
   glBindVertexArrayOES(0);
+}
+
+static BOOL isExponent(int x)
+{
+  return ( x & ( x - 1 ) ) == 0;
+}
+
+static int exponent( int num )
+{
+  int r = 2;
+  while ( num > r )
+    r *= 2;
+  return r;
+}
+
+- (void)setupTexture
+{
+  // 画像のロード
+  UIImage* pImage = [ UIImage imageNamed:@"moyashi.png" ];
+  _texSize = _imageSize = pImage.size;
+  
+  // 画像のサイズ変更
+  if (!isExponent(_imageSize.width)){
+    _texSize.width = exponent(_imageSize.width);
+  }
+  
+  if (!isExponent(_imageSize.height)){
+    _texSize.height = exponent(_imageSize.height);
+  }
+
+  // ビットマップのデータを用意する
+  // 1ピクセルあたりRGBA = 4バイト必要
+  GLubyte* pImageData = ( GLubyte* )calloc( _texSize.width * _texSize.height * 4, sizeof( GLubyte ) );
+  
+  
+  // 描画先のグラフィックスコンテキストを作成
+  CGColorSpaceRef pColor = CGImageGetColorSpace( pImage.CGImage );
+  
+  CGContextRef pImageContext = CGBitmapContextCreate( pImageData, _texSize.width, _texSize.height, 8, _texSize.width * 4, pColor, kCGImageAlphaPremultipliedLast );
+  
+  
+  
+  // 左下からになってしまうため
+  CGContextTranslateCTM( pImageContext, 0.0, _texSize.height - _imageSize.height );
+  
+  // コンテキストに書き込み = ビットマップに書き込み
+  CGContextDrawImage( pImageContext, CGRectMake( 0, 0, _imageSize.width, _imageSize.height ), pImage.CGImage );
+  
+  // 確認
+//  [self confirmImage:pImageContext];
+  
+  // いらないものを削除する
+  CGContextRelease( pImageContext );
+  CGColorSpaceRelease( pColor );
+}
+
+- (void)confirmImage:(CGContextRef) imageContext
+{
+  // 確認
+  CGImageRef pdI = CGBitmapContextCreateImage( imageContext );
+  UIImage* pTes = [UIImage imageWithCGImage:pdI ];
+  NSData *data = UIImagePNGRepresentation( pTes );
+  
+  NSString *filePath = [NSString stringWithFormat:@"/Users/murakamishintarou/DeskTop/test.png" ];
+  
+  if ( [data writeToFile:filePath atomically:YES] )
+    NSLog(@"生成されたよ。");
+  else
+    NSLog(@"なにかおかしいっすよ。");
 }
 
 - (void)tearDownGL
