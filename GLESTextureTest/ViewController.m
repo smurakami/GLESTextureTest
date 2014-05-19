@@ -27,69 +27,55 @@ enum
   NUM_ATTRIBUTES
 };
 
-/*立方体＝6面体×2個の三角形×3頂点=36頂点
-各頂点＝(X, Y, Z) 法線ベクトル=(X, Y, Z) = 6データ
-36x6=216個のデータ*/
-GLfloat gCubeVertexData[(3+3+2)*36] = 
+#define VERTEX_ELEM_LEN (3+3+2)
+#define VERTEX_NUM 36
+#define VERTEX_LEN (VERTEX_ELEM_LEN * VERTEX_NUM)
+GLfloat gCubeVertexData[VERTEX_LEN] =
 {
-    // Data layout for each line below is:
-    // positionX, positionY, positionZ,     normalX, normalY, normalZ,
-    0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,    0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,    1.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,    0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,    0.0f, 1.0f,
-    0.5f, 0.5f, -0.5f,          1.0f, 0.0f, 0.0f,    1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,    1.0f, 1.0f,
-    
-    0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,    1.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,    0.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,    1.0f, 1.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,    1.0f, 1.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,    0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,    0.0f, 1.0f,
-    
-    -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,    1.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,    0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,    1.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,    1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,    0.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,    0.0f, 1.0f,
-    
-    -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,    0.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,    1.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,    0.0f, 1.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,    0.0f, 1.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,    1.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,    1.0f, 1.0f,
-    
-    0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
-    
-    0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,    1.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,    0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,    1.0f, 1.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,    1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,    0.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f,    0.0f, 1.0f,
+  // Data layout for each line below is:
+  // positionX, positionY, positionZ,     normalX, normalY, normalZ,
+  0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,    0.0f, 0.0f,
+  0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,    1.0f, 0.0f,
+  0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,    0.0f, 1.0f,
+  0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,    0.0f, 1.0f,
+  0.5f, 0.5f, -0.5f,          1.0f, 0.0f, 0.0f,    1.0f, 0.0f,
+  0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,    1.0f, 1.0f,
+  
+  0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,    1.0f, 0.0f,
+  -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,    0.0f, 0.0f,
+  0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,    1.0f, 1.0f,
+  0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,    1.0f, 1.0f,
+  -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,    0.0f, 0.0f,
+  -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,    0.0f, 1.0f,
+  
+  -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,    1.0f, 0.0f,
+  -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,    0.0f, 0.0f,
+  -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,    1.0f, 1.0f,
+  -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,    1.0f, 1.0f,
+  -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,    0.0f, 0.0f,
+  -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,    0.0f, 1.0f,
+  
+  -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,    0.0f, 0.0f,
+  0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,    1.0f, 0.0f,
+  -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,    0.0f, 1.0f,
+  -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,    0.0f, 1.0f,
+  0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,    1.0f, 0.0f,
+  0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,    1.0f, 1.0f,
+  
+  0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
+  -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
+  0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 0.0f,
+  0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 0.0f,
+  -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
+  -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
+  
+  0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,    1.0f, 0.0f,
+  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,    0.0f, 0.0f,
+  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,    1.0f, 1.0f,
+  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,    1.0f, 1.0f,
+  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,    0.0f, 0.0f,
+  -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f,    0.0f, 1.0f,
 };
-
-//#define VERTEX_NUM 6
-//#define VERTEX_ELEM_DATA_LEN (3 + 3 + 2)
-//#define SQUARE_DATA_LEN (VERTEX_ELEM_DATA_LEN * VERTEX_NUM)
-//GLfloat gSquareData[SQUARE_DATA_LEN] = {
-//  // Data layout for each line below is:
-//  // positionX, positionY, positionZ,     normalX, normalY, normalZ,
-//  0.5f, -0.5f, -0.5f,     0.0, 1.0, 1.0,    1.0f, 0.0f,
-//  0.5f,  0.5f, -0.5f,     0.0, 1.0, 1.0,    0.0f, 0.0f,
-//  0.5f, -0.5f,  0.5f,     0.0, 1.0, 1.0,    1.0f, 1.0f,
-//  0.5f, -0.5f,  0.5f,     0.0, 1.0, 1.0,    1.0f, 1.0f,
-//  0.5f,  0.5f, -0.5f,     0.0, 1.0, 1.0,    0.0f, 0.0f,
-//  0.5f,  0.5f,  0.5f,     0.0, 1.0, 1.0,    0.0f, 1.0f,
-//};
 
 @interface ViewController () {
   GLuint _program;
@@ -163,40 +149,40 @@ GLfloat gCubeVertexData[(3+3+2)*36] =
 
 - (void)setupGL
 {
-    [EAGLContext setCurrentContext:self.context];
-    
-    self.effect = [[GLKBaseEffect alloc] init];
-    self.effect.light0.enabled = GL_TRUE;
-    self.effect.light0.diffuseColor
-        = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+  [EAGLContext setCurrentContext:self.context];
+  
+  self.effect = [[GLKBaseEffect alloc] init];
+  self.effect.light0.enabled = GL_TRUE;
+  self.effect.light0.diffuseColor
+  = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
   self.effect.colorMaterialEnabled = YES;
-    
-    glEnable(GL_DEPTH_TEST);
-    
-    //
-    glGenVertexArraysOES(1, &_vertexArray);
-    glBindVertexArrayOES(_vertexArray);
-    
-    glGenBuffers(1, &_vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
-    
-    glEnableVertexAttribArray(GLKVertexAttribPosition);
-    glVertexAttribPointer(GLKVertexAttribPosition,
-                          3, GL_FLOAT, GL_FALSE,
-                          32, BUFFER_OFFSET(0));
-
-    glEnableVertexAttribArray(GLKVertexAttribNormal);
-    glVertexAttribPointer(GLKVertexAttribNormal,
-                          3, GL_FLOAT, GL_FALSE,
-                          32, BUFFER_OFFSET(12));
-    
-    glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
-    glVertexAttribPointer(GLKVertexAttribTexCoord0,
-                          2, GL_FLOAT, GL_FALSE,
-                          32, BUFFER_OFFSET(24));
-
-    glBindVertexArrayOES(0);
+  
+  glEnable(GL_DEPTH_TEST);
+  
+  //
+  glGenVertexArraysOES(1, &_vertexArray);
+  glBindVertexArrayOES(_vertexArray);
+  
+  glGenBuffers(1, &_vertexBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
+  
+  glEnableVertexAttribArray(GLKVertexAttribPosition);
+  glVertexAttribPointer(GLKVertexAttribPosition,
+                        3, GL_FLOAT, GL_FALSE,
+                        VERTEX_ELEM_LEN * sizeof(GLfloat), BUFFER_OFFSET(0));
+  
+  glEnableVertexAttribArray(GLKVertexAttribNormal);
+  glVertexAttribPointer(GLKVertexAttribNormal,
+                        3, GL_FLOAT, GL_FALSE,
+                        VERTEX_ELEM_LEN * sizeof(GLfloat), BUFFER_OFFSET(sizeof(GLfloat)*3));
+  
+  glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
+  glVertexAttribPointer(GLKVertexAttribTexCoord0,
+                        2, GL_FLOAT, GL_FALSE,
+                        VERTEX_ELEM_LEN * sizeof(GLfloat), BUFFER_OFFSET(sizeof(GLfloat)*6));
+  
+  glBindVertexArrayOES(0);
   
   NSURL *imageURL = [[NSBundle mainBundle]
                      URLForResource:@"moyashi" withExtension:@"png"];
@@ -244,18 +230,18 @@ GLfloat gCubeVertexData[(3+3+2)*36] =
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    glBindVertexArrayOES(_vertexArray);
-    
-    // Render the object with GLKit
-    self.effect.texture2d0.enabled = GL_TRUE;
-    self.effect.texture2d0.name = _texInfo.name;
-    self.effect.texture2d0.target = _texInfo.target;
-    [self.effect prepareToDraw];
-    
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+  glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
+  glBindVertexArrayOES(_vertexArray);
+  
+  // Render the object with GLKit
+  self.effect.texture2d0.enabled = GL_TRUE;
+  self.effect.texture2d0.name = _texInfo.name;
+  self.effect.texture2d0.target = _texInfo.target;
+  [self.effect prepareToDraw];
+  
+  glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
 @end
