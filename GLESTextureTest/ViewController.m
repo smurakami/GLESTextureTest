@@ -83,7 +83,7 @@ GLfloat gCubeVertexData[216 + 108] =
   
   GLuint _vertexArray;
   GLuint _vertexBuffer;
-  GLuint _texsture;
+  GLuint _texture;
   
   CGSize _texSize;
   CGSize _imageSize;
@@ -236,6 +236,27 @@ static int exponent( int num )
   // いらないものを削除する
   CGContextRelease( pImageContext );
   CGColorSpaceRelease( pColor );
+  
+  /** テクスチャ領域を生成し、 mTexture 変数に識別番号を入れる。 **/
+  glGenTextures( 1, &_texture );
+  /** これから使用するテクスチャをセットする。 **/
+  glBindTexture( GL_TEXTURE_2D, _texture );
+  
+  // 自動的にミップマップ画像を作成してくれる
+  glTexParameteri( GL_TEXTURE_2D, GL_GENERATE_MIPMAP_HINT, GL_TRUE );
+  // テクスチャを拡大縮小するときの保管方法
+  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+  
+  // テクスチャの繰り返し方法
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+  glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+  
+  // 画像をテクスチャに貼り付け。
+  // テクスチャは2のべき乗。
+  glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, _texSize.width, _texSize.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pImageData );
+  
+  
 }
 
 - (void)confirmImage:(CGContextRef) imageContext
@@ -296,9 +317,33 @@ static int exponent( int num )
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   glBindVertexArrayOES(_vertexArray);
-  
   // Render the object with GLKit
   [self.effect prepareToDraw];
+  
+  
+  // テクスチャ座標
+  GLfloat tx = 0.0f;
+  GLfloat ty = 0.0f;
+  GLfloat tw = _imageSize.width/_texSize.width;
+  GLfloat th = _imageSize.height/_texSize.height;
+  
+  const GLfloat texCoords[] =
+  {
+    tx,	 ty,	 // 左上
+    tx + tw,	ty,	 // 右上
+    tx,	 ty + th,	// 左下
+    tx + tw,	ty + th,	// 右下
+  };
+  
+  // テクスチャ機能を有効にする
+  glEnable( GL_TEXTURE_2D );
+  glBindTexture( GL_TEXTURE_2D, _texture );
+  
+  //** テクスチャ座標をOpenGL ESに教える
+  //**     座標の数、 型、 オフセット値, テクスチャ座標が入った配列
+  glTexCoordPointer( 2, GL_FLOAT, 0, texCoords );
+  glEnableClientState( GL_TEXTURE_COORD_ARRAY );
+  
   
   glDrawArrays(GL_TRIANGLES, 0, 36);
 }
