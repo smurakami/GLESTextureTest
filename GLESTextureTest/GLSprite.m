@@ -30,6 +30,7 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 @property (nonatomic) GLuint vertexBuffer;
 @property (strong, nonatomic) GLKTextureInfo *texInfo;
 @property (nonatomic) GLKMatrix4 modelViewMatrix;
+@property (nonatomic) int counter;
 @end
 
 @implementation GLSprite
@@ -91,10 +92,9 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 
 - (void)update
 {
-  static int counter;
 //  _modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-  _modelViewMatrix = GLKMatrix4MakeTranslation(counter * 0.01, 0.0f, -5.0f);
-  counter++;
+  _modelViewMatrix = GLKMatrix4MakeTranslation(_counter * 0.01, 0.0f, -5.0f);
+  _counter++;
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect

@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
-@property (strong, nonatomic) GLSprite * sprite;
+@property (strong, nonatomic) NSMutableArray * sprites;
 
 - (void)setupGL;
 - (void)tearDownGL;
@@ -83,7 +83,7 @@
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   
   // 物体生成
-  _sprite = [[GLSprite alloc] initWithContext:self.context effect:self.effect];
+  _sprites = [NSMutableArray array];
 }
 
 - (void)tearDownGL
@@ -109,7 +109,9 @@
   
   self.effect.transform.modelviewMatrix = modelViewMatrix;
   
-  [_sprite update];
+  [_sprites enumerateObjectsUsingBlock:^(GLSprite * sprite, NSUInteger idx, BOOL *stop){
+    [sprite update];
+  }];
 //  _rotation += self.timeSinceLastUpdate * 0.5f;
 }
 
@@ -119,7 +121,21 @@
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
   // Render the object with GLKit
-  [self.sprite glkView:view drawInRect:rect];
+  [_sprites enumerateObjectsUsingBlock:^(GLSprite * sprite, NSUInteger idx, BOOL *stop){
+    [sprite glkView:view drawInRect:rect];
+  }];
+}
+
+#pragma mark - test
+- (void)appendSprite
+{
+  GLSprite * sprite = [[GLSprite alloc] initWithContext:_context effect:_effect];
+  [_sprites addObject:sprite];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+  [self appendSprite];
 }
 
 @end
