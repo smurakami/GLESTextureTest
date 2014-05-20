@@ -23,6 +23,12 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
   -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
 };
 
+@interface GLSprite()
+@property (nonatomic) GLuint vertexArray;
+@property (nonatomic) GLuint vertexBuffer;
+
+@property (nonatomic) GLKTextureInfo *texInfo;
+@end
 
 @implementation GLSprite
 - (id)init {
