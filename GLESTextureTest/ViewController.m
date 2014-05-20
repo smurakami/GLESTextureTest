@@ -28,7 +28,7 @@ enum
 };
 
 #define VERTEX_ELEM_LEN (3+3+2)
-#define VERTEX_NUM 6
+#define VERTEX_NUM 4
 #define VERTEX_LEN (VERTEX_ELEM_LEN * VERTEX_NUM)
 GLfloat gCubeVertexData[VERTEX_LEN] =
 {
@@ -72,9 +72,7 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
   0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    1.0f, 0.0f,
   -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
   0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
-  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
   -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
-  -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
 };
 
 @interface ViewController () {
@@ -247,7 +245,7 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
   self.effect.texture2d0.target = _texInfo.target;
   [self.effect prepareToDraw];
   
-  glDrawArrays(GL_TRIANGLES, 0, 36);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, VERTEX_NUM);
 }
 
 @end
