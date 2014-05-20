@@ -228,7 +228,7 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
   
   self.effect.transform.modelviewMatrix = modelViewMatrix;
   
-  _rotation += self.timeSinceLastUpdate * 0.5f;
+//  _rotation += self.timeSinceLastUpdate * 0.5f;
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
