@@ -31,12 +31,57 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 @end
 
 @implementation GLSprite
-- (id)init {
+- (id)initWithEffect:(GLKBaseEffect *)effect
+{
   self = [super init];
   if (self) {
-    
+    _effect = effect;
+    [self setupVertex];
+    [self setupTexture];
   }
   return self;
+}
+
+- (void)dealloc
+{
+  glDeleteBuffers(1, &_vertexBuffer);
+  glDeleteVertexArraysOES(1, &_vertexArray);
+}
+
+- (void)setupVertex
+{
+  glGenVertexArraysOES(1, &_vertexArray);
+  glBindVertexArrayOES(_vertexArray);
+  
+  glGenBuffers(1, &_vertexBuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(gCubeVertexData), gCubeVertexData, GL_STATIC_DRAW);
+  
+  glEnableVertexAttribArray(GLKVertexAttribPosition);
+  glVertexAttribPointer(GLKVertexAttribPosition,
+                        3, GL_FLOAT, GL_FALSE,
+                        VERTEX_ELEM_LEN * sizeof(GLfloat), BUFFER_OFFSET(0));
+  
+  glEnableVertexAttribArray(GLKVertexAttribNormal);
+  glVertexAttribPointer(GLKVertexAttribNormal,
+                        3, GL_FLOAT, GL_FALSE,
+                        VERTEX_ELEM_LEN * sizeof(GLfloat), BUFFER_OFFSET(sizeof(GLfloat)*3));
+  
+  glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
+  glVertexAttribPointer(GLKVertexAttribTexCoord0,
+                        2, GL_FLOAT, GL_FALSE,
+                        VERTEX_ELEM_LEN * sizeof(GLfloat), BUFFER_OFFSET(sizeof(GLfloat)*6));
+  
+  glBindVertexArrayOES(0);
+}
+
+- (void)setupTexture
+{
+  NSURL *imageURL = [[NSBundle mainBundle]
+                     URLForResource:@"moyashi" withExtension:@"png"];
+  _texInfo = [GLKTextureLoader
+              textureWithContentsOfURL:imageURL
+              options:nil error:NULL];
 }
 
 - (void)update

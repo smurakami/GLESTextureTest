@@ -16,6 +16,7 @@
 #import <GLKit/GLKit.h>
 
 @interface GLSprite : NSObject
+@property (nonatomic) GLKBaseEffect * effect;
 - (void)update;
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect;
 @end
