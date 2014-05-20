@@ -13,7 +13,7 @@
 #define VERTEX_ELEM_LEN (3+3+2)
 #define VERTEX_NUM 4
 #define VERTEX_LEN (VERTEX_ELEM_LEN * VERTEX_NUM)
-GLfloat gCubeVertexData[VERTEX_LEN] =
+static GLfloat gCubeVertexData[VERTEX_LEN] =
 {
   // Data layout for each line below is:
   // positionX, positionY, positionZ,     normalX, normalY, normalZ,
