@@ -28,7 +28,8 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 @property (weak, nonatomic) GLKBaseEffect * effect;
 @property (nonatomic) GLuint vertexArray;
 @property (nonatomic) GLuint vertexBuffer;
-@property (nonatomic) GLKTextureInfo *texInfo;
+@property (strong, nonatomic) GLKTextureInfo *texInfo;
+@property (nonatomic) GLKMatrix4 modelViewMatrix;
 @end
 
 @implementation GLSprite
@@ -90,20 +91,29 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 
 - (void)update
 {
-  
+  static int counter;
+//  _modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
+  _modelViewMatrix = GLKMatrix4MakeTranslation(counter * 0.01, 0.0f, -5.0f);
+  counter++;
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-  glBindVertexArrayOES(_vertexArray);
+  GLKMatrix4 baseMat = _effect.transform.modelviewMatrix;
   
+  _effect.transform.modelviewMatrix = GLKMatrix4Multiply(baseMat, _modelViewMatrix);
+  
+  glBindVertexArrayOES(_vertexArray);
   // Render the object with GLKit
-  self.effect.texture2d0.enabled = GL_TRUE;
-  self.effect.texture2d0.name = _texInfo.name;
-  self.effect.texture2d0.target = _texInfo.target;
-  [self.effect prepareToDraw];
+  _effect.texture2d0.enabled = GL_TRUE;
+  _effect.texture2d0.name = _texInfo.name;
+  _effect.texture2d0.target = _texInfo.target;
+  [_effect prepareToDraw];
   
   glDrawArrays(GL_TRIANGLE_STRIP, 0, VERTEX_NUM);
+  
+  _effect.transform.modelviewMatrix = baseMat;
+
 }
 
 @end

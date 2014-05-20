@@ -9,31 +9,10 @@
 #import "ViewController.h"
 #import "GLSprite.h"
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
-#define VERTEX_ELEM_LEN (3+3+2)
-#define VERTEX_NUM 4
-#define VERTEX_LEN (VERTEX_ELEM_LEN * VERTEX_NUM)
-static GLfloat gCubeVertexData[VERTEX_LEN] =
-{
-  // Data layout for each line below is:
-  // positionX, positionY, positionZ,     normalX, normalY, normalZ,
-  0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
-  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
-  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 0.0f,
-  -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
-};
-
 @interface ViewController ()
-
-@property (nonatomic) GLuint vertexArray;
-@property (nonatomic) GLuint vertexBuffer;
-
-@property (nonatomic) GLKTextureInfo *texInfo;
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
-
 @property (strong, nonatomic) GLSprite * sprite;
 
 - (void)setupGL;
@@ -97,30 +76,19 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
   self.effect.light0.diffuseColor
   = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
   self.effect.colorMaterialEnabled = YES;
-//  self.effect.light0.position = GLKVector4Make(0, 0, 0, 0);
-  
-//  GLKVector4 pos = self.effect.light0.position;
   
   glEnable(GL_DEPTH_TEST);
-	//** アルファブレンド
+	// アルファブレンド
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   
   // 物体生成
-  
-  [EAGLContext setCurrentContext:nil];
   _sprite = [[GLSprite alloc] initWithContext:self.context effect:self.effect];
-  [EAGLContext setCurrentContext:self.context];
-  
 }
 
 - (void)tearDownGL
 {
   [EAGLContext setCurrentContext:self.context];
-  
-  glDeleteBuffers(1, &_vertexBuffer);
-  glDeleteVertexArraysOES(1, &_vertexArray);
-  
   self.effect = nil;
 }
 
@@ -134,15 +102,14 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
   self.effect.transform.projectionMatrix = projectionMatrix;
   
   GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 0.0f);
-//  baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
   
-  // Compute the model view matrix for the object rendered with GLKit
   GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
 //  modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 1.0f, 1.0f, 1.0f);
   modelViewMatrix = GLKMatrix4Multiply(baseModelViewMatrix, modelViewMatrix);
   
   self.effect.transform.modelviewMatrix = modelViewMatrix;
   
+  [_sprite update];
 //  _rotation += self.timeSinceLastUpdate * 0.5f;
 }
 
@@ -150,7 +117,6 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 {
   glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
   
   // Render the object with GLKit
   [self.sprite glkView:view drawInRect:rect];
