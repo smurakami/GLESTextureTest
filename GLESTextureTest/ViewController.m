@@ -69,12 +69,12 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
 //  -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
 //  -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
 //  
-  0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,    1.0f, 0.0f,
-  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,    0.0f, 0.0f,
-  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,    1.0f, 1.0f,
-  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,    1.0f, 1.0f,
-  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,    0.0f, 0.0f,
-  -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f,    0.0f, 1.0f,
+  0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    1.0f, 0.0f,
+  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
+  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
+  0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
+  -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
+  -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
 };
 
 @interface ViewController () {
@@ -155,8 +155,8 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
   self.effect.light0.enabled = GL_TRUE;
   self.effect.light0.diffuseColor
   = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
-  self.effect.light0.position = GLKVector4Make(0, 0, 0, 0);
   self.effect.colorMaterialEnabled = YES;
+//  self.effect.light0.position = GLKVector4Make(0, 0, 0, 0);
   
   GLKVector4 pos = self.effect.light0.position;
   
