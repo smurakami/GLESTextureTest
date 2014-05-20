@@ -221,7 +221,7 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
   
   self.effect.transform.projectionMatrix = projectionMatrix;
   
-  GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -4.0f);
+  GLKMatrix4 baseModelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, 0.0f);
   baseModelViewMatrix = GLKMatrix4Rotate(baseModelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
   
   // Compute the model view matrix for the object rendered with GLKit
