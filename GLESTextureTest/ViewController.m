@@ -23,21 +23,12 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
   -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    0.0f, 0.0f,
 };
 
-@interface ViewController () {
-  GLuint _program;
-  
-  GLKMatrix4 _modelViewProjectionMatrix;
-  GLKMatrix3 _normalMatrix;
-  float _rotation;
-  
-  GLuint _vertexArray;
-  GLuint _vertexBuffer;
-  GLuint _texture;
-  
-  
-  CGSize _texSize;
-  CGSize _imageSize;
-}
+@interface ViewController ()
+
+@property (nonatomic) GLuint vertexArray;
+@property (nonatomic) GLuint vertexBuffer;
+
+@property (nonatomic) GLKTextureInfo *texInfo;
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
@@ -151,11 +142,6 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
   glDeleteVertexArraysOES(1, &_vertexArray);
   
   self.effect = nil;
-  
-  if (_program) {
-    glDeleteProgram(_program);
-    _program = 0;
-  }
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods

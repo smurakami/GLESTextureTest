@@ -16,7 +16,7 @@
 static GLfloat gCubeVertexData[VERTEX_LEN] =
 {
   // Data layout for each line below is:
-  // positionX, positionY, positionZ,     normalX, normalY, normalZ,
+  // positionX, positionY, positionZ,     normalX, normalY, normalZ,   textureX, textureY
   0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 1.0f,    1.0f, 1.0f,
   -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, 1.0f,    0.0f, 1.0f,
   0.5f, 0.5f, -0.5f,         0.0f, 0.0f, 1.0f,    1.0f, 0.0f,

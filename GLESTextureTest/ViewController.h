@@ -11,6 +11,5 @@
 
 @interface ViewController : GLKViewController
 {
-  GLKTextureInfo *_texInfo;
 }
 @end
