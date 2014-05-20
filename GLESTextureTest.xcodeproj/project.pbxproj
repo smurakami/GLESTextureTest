@@ -26,6 +26,7 @@
 		6C2F689B1929B16000531125 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F68991929B16000531125 /* InfoPlist.strings */; };
 		6C2F689D1929B16000531125 /* GLESTextureTestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F689C1929B16000531125 /* GLESTextureTestTests.m */; };
 		6C2F68A81929BC1600531125 /* moyashi.png in Resources */ = {isa = PBXBuildFile; fileRef = 6C2F68A71929BC1600531125 /* moyashi.png */; };
+		6C2F68AF192AFBCA00531125 /* GLSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2F68AE192AFBCA00531125 /* GLSprite.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		6C2F689A1929B16000531125 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6C2F689C1929B16000531125 /* GLESTextureTestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLESTextureTestTests.m; sourceTree = "<group>"; };
 		6C2F68A71929BC1600531125 /* moyashi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moyashi.png; sourceTree = "<group>"; };
+		6C2F68AD192AFBCA00531125 /* GLSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLSprite.h; sourceTree = "<group>"; };
+		6C2F68AE192AFBCA00531125 /* GLSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLSprite.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +139,8 @@
 				6C2F68871929B15F00531125 /* ViewController.m */,
 				6C2F68891929B15F00531125 /* Images.xcassets */,
 				6C2F68741929B15F00531125 /* Supporting Files */,
+				6C2F68AD192AFBCA00531125 /* GLSprite.h */,
+				6C2F68AE192AFBCA00531125 /* GLSprite.m */,
 			);
 			path = GLESTextureTest;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				6C2F68881929B15F00531125 /* ViewController.m in Sources */,
 				6C2F687E1929B15F00531125 /* AppDelegate.m in Sources */,
 				6C2F687A1929B15F00531125 /* main.m in Sources */,
+				6C2F68AF192AFBCA00531125 /* GLSprite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
