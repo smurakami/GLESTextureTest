@@ -10,23 +10,6 @@
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
-// Uniform index.
-enum
-{
-  UNIFORM_MODELVIEWPROJECTION_MATRIX,
-  UNIFORM_NORMAL_MATRIX,
-  NUM_UNIFORMS
-};
-GLint uniforms[NUM_UNIFORMS];
-
-// Attribute index.
-enum
-{
-  ATTRIB_VERTEX,
-  ATTRIB_NORMAL,
-  NUM_ATTRIBUTES
-};
-
 #define VERTEX_ELEM_LEN (3+3+2)
 #define VERTEX_NUM 4
 #define VERTEX_LEN (VERTEX_ELEM_LEN * VERTEX_NUM)
@@ -121,7 +104,7 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
   self.effect.colorMaterialEnabled = YES;
 //  self.effect.light0.position = GLKVector4Make(0, 0, 0, 0);
   
-  GLKVector4 pos = self.effect.light0.position;
+//  GLKVector4 pos = self.effect.light0.position;
   
   glEnable(GL_DEPTH_TEST);
 	//** アルファブレンド
