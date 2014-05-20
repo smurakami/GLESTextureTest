@@ -24,17 +24,19 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 };
 
 @interface GLSprite()
-@property (nonatomic) GLKBaseEffect * effect;
+@property (weak, nonatomic) EAGLContext * context;
+@property (weak, nonatomic) GLKBaseEffect * effect;
 @property (nonatomic) GLuint vertexArray;
 @property (nonatomic) GLuint vertexBuffer;
 @property (nonatomic) GLKTextureInfo *texInfo;
 @end
 
 @implementation GLSprite
-- (id)initWithEffect:(GLKBaseEffect *)effect
+- (id)initWithContext:(EAGLContext *)context effect:(GLKBaseEffect *)effect
 {
   self = [super init];
   if (self) {
+    _context = context;
     _effect = effect;
     [self setupVertex];
     [self setupTexture];
@@ -50,6 +52,8 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 
 - (void)setupVertex
 {
+  [EAGLContext setCurrentContext:self.context];
+  
   glGenVertexArraysOES(1, &_vertexArray);
   glBindVertexArrayOES(_vertexArray);
   

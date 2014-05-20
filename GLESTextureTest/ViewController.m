@@ -89,6 +89,7 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 
 - (void)setupGL
 {
+  
   [EAGLContext setCurrentContext:self.context];
   
   self.effect = [[GLKBaseEffect alloc] init];
@@ -106,7 +107,10 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
   
   // 物体生成
-  _sprite = [[GLSprite alloc] initWithEffect:self.effect];
+  
+  [EAGLContext setCurrentContext:nil];
+  _sprite = [[GLSprite alloc] initWithContext:self.context effect:self.effect];
+  [EAGLContext setCurrentContext:self.context];
   
 }
 
