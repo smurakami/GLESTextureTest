@@ -28,12 +28,26 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 @property (weak, nonatomic) GLKBaseEffect * effect;
 @property (nonatomic) GLuint vertexArray;
 @property (nonatomic) GLuint vertexBuffer;
-@property (strong, nonatomic) GLKTextureInfo *texInfo;
 @property (nonatomic) GLKMatrix4 modelViewMatrix;
+@property (nonatomic) GLKTextureInfo * texInfo;
 @property (nonatomic) int counter;
++(GLKTextureInfo *) sharedTexInfo;
 @end
 
 @implementation GLSprite
+
+static GLKTextureInfo * _sharedTexInfo = nil;
++ (GLKTextureInfo *) sharedTexInfo {
+  if (!_sharedTexInfo) {
+    NSURL *imageURL = [[NSBundle mainBundle]
+                       URLForResource:@"moyashi" withExtension:@"png"];
+    _sharedTexInfo = [GLKTextureLoader
+                      textureWithContentsOfURL:imageURL
+                      options:nil error:NULL];
+  }
+  return _sharedTexInfo;
+}
+
 - (id)initWithContext:(EAGLContext *)context effect:(GLKBaseEffect *)effect
 {
   self = [super init];
@@ -83,17 +97,12 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 
 - (void)setupTexture
 {
-  NSURL *imageURL = [[NSBundle mainBundle]
-                     URLForResource:@"moyashi" withExtension:@"png"];
-  _texInfo = [GLKTextureLoader
-              textureWithContentsOfURL:imageURL
-              options:nil error:NULL];
+  _texInfo = [GLSprite sharedTexInfo];
 }
 
 - (void)update
 {
-//  _modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-  _modelViewMatrix = GLKMatrix4MakeTranslation(_counter * 0.01, 0.0f, -5.0f);
+  _modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
   _counter++;
 }
 
