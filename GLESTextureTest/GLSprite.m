@@ -24,9 +24,9 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 };
 
 @interface GLSprite()
+@property (nonatomic) GLKBaseEffect * effect;
 @property (nonatomic) GLuint vertexArray;
 @property (nonatomic) GLuint vertexBuffer;
-
 @property (nonatomic) GLKTextureInfo *texInfo;
 @end
 
@@ -91,7 +91,15 @@ static GLfloat gCubeVertexData[VERTEX_LEN] =
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
+  glBindVertexArrayOES(_vertexArray);
   
+  // Render the object with GLKit
+  self.effect.texture2d0.enabled = GL_TRUE;
+  self.effect.texture2d0.name = _texInfo.name;
+  self.effect.texture2d0.target = _texInfo.target;
+  [self.effect prepareToDraw];
+  
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, VERTEX_NUM);
 }
 
 @end
