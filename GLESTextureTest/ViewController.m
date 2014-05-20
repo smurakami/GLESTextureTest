@@ -155,7 +155,10 @@ GLfloat gCubeVertexData[VERTEX_LEN] =
   self.effect.light0.enabled = GL_TRUE;
   self.effect.light0.diffuseColor
   = GLKVector4Make(1.0f, 1.0f, 1.0f, 1.0f);
+  self.effect.light0.position = GLKVector4Make(0, 0, 0, 0);
   self.effect.colorMaterialEnabled = YES;
+  
+  GLKVector4 pos = self.effect.light0.position;
   
   glEnable(GL_DEPTH_TEST);
 	//** アルファブレンド
